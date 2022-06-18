@@ -12,6 +12,11 @@
   "build_url": "https://github.com/nextstrain/monkeypox",
   "colorings": [
     {
+      "key": "clade_membership",
+      "title": "Lineage",
+      "type": "categorical"
+    },
+    {
       "key": "outbreak_associated",
       "title": "Outbreak Associated",
       "type": "categorical"
