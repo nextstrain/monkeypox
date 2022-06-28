@@ -13,9 +13,10 @@ Produces final output as
 
 """
 
+
 rule fetch_from_genbank:
     output:
-        genbank_ndjson = "data/genbank.ndjson"
+        genbank_ndjson="data/genbank.ndjson",
     shell:
         """
         ./bin/fetch-from-genbank > {output.genbank_ndjson}
@@ -23,17 +24,14 @@ rule fetch_from_genbank:
 
 
 def _get_all_sources(wildcards):
-    return [
-        f"data/{source}.ndjson"
-        for source in config['sources']
-    ]
+    return [f"data/{source}.ndjson" for source in config["sources"]]
 
 
 rule fetch_all_sequences:
     input:
-        all_sources = _get_all_sources
+        all_sources=_get_all_sources,
     output:
-        sequences_ndjson = "data/sequences.ndjson"
+        sequences_ndjson="data/sequences.ndjson",
     shell:
         """
         cat {input.all_sources} > {output.sequences_ndjson}
