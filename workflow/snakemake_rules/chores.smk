@@ -9,13 +9,14 @@ rule update_example_data:
 
     TODO: Use `strain` as the ID column after https://github.com/nextstrain/monkeypox/issues/33 is done.
     """
-    message: "Update example data"
+    message:
+        "Update example data"
     input:
-        sequences = "data/sequences.fasta",
-        metadata = "data/metadata.tsv"
+        sequences="data/sequences.fasta",
+        metadata="data/metadata.tsv",
     output:
-        sequences = "example_data/sequences.fasta",
-        metadata = "example_data/metadata.tsv"
+        sequences="example_data/sequences.fasta",
+        metadata="example_data/metadata.tsv",
     shell:
         """
         augur filter \

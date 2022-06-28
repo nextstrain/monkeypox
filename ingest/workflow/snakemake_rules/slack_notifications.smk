@@ -14,19 +14,20 @@ slack_envvars_defined = "SLACK_CHANNELS" in os.environ and "SLACK_TOKEN" in os.e
 if not slack_envvars_defined:
     print(
         "ERROR: Slack notifications require two environment variables: 'SLACK_CHANNELS' and 'SLACK_TOKEN'.",
-        file=sys.stderr
+        file=sys.stderr,
     )
     sys.exit(1)
 
 S3_SRC = "s3://nextstrain-data/files/workflows/monkeypox"
 
+
 rule notify_on_genbank_record_change:
     input:
-        genbank_ndjson = "data/genbank.ndjson"
+        genbank_ndjson="data/genbank.ndjson",
     output:
-        touch("data/notify/genbank-record-change.done")
+        touch("data/notify/genbank-record-change.done"),
     params:
-        s3_src = S3_SRC
+        s3_src=S3_SRC,
     shell:
         """
         ./bin/notify-on-record-change {input.genbank_ndjson} {params.s3_src:q}/genbank.ndjson.xz Genbank
@@ -35,6 +36,7 @@ rule notify_on_genbank_record_change:
 
 onstart:
     shell("./bin/notify-on-job-start")
+
 
 onerror:
     shell("./bin/notify-on-job-fail")
