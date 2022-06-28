@@ -10,3 +10,12 @@ jobs:
     with:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ~3
+    - run: pip install snakefmt
+    - run: snakefmt --check .
