@@ -10,3 +10,13 @@ jobs:
     with:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base
+  test-ingest-scripts:
+    name: Test scripts under ingest/bin/
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - run: pip install pytest
+    - run: pytest ingest/bin/tests/
