@@ -1,8 +1,8 @@
 '''
 This part of the workflow expects input files
 
-        sequences = "data/sequences.fasta",
-        metadata =  "data/metadata.tsv",
+        sequences = "data/{build_name}_sequences.fasta",
+        metadata =  "data/{build_name}_metadata.tsv",
 
 and will produce output files as
 
@@ -14,9 +14,9 @@ In addition, `build_dir` and `auspice_dir` need to be defined upstream.
 
 rule wrangle_metadata:
     input:
-        metadata =  "data/metadata.tsv"
+        metadata =  "data/{build_name}_metadata.tsv"
     output:
-        metadata = "results/metadata.tsv"
+        metadata = "results/{build_name}_metadata.tsv"
     params:
         strain_id = lambda w: config.get('strain_id_field', 'strain')
     shell:
@@ -36,8 +36,8 @@ rule filter:
           - minimum genome length of {params.min_length}
         """
     input:
-        sequences = "data/sequences.fasta",
-        metadata =  "results/metadata.tsv",
+        sequences = "data/{build_name}_sequences.fasta",
+        metadata =  "results/{build_name}_metadata.tsv",
         exclude = config["exclude"]
     output:
         sequences = build_dir + "/{build_name}/filtered.fasta",
